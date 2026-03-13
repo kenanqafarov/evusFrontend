@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Settings } from "lucide-react";
+import { Settings, LogOut } from "lucide-react";
 import WalletCard from "@/components/WalletCard";
 import type { LoyaltyCard } from "@/types/card";
 import { sampleCards } from "@/data/sampleCards";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const [cards, setCards] = useState<LoyaltyCard[]>([]);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   useEffect(() => {
     const stored = localStorage.getItem("wallet-cards");
@@ -25,12 +33,22 @@ const Index = () => {
       <div className="sticky top-0 z-10 glass-effect bg-background/80 border-b border-border">
         <div className="max-w-lg mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-lg font-semibold text-foreground">Wallet</h1>
-          <Link
-            to="/admin"
-            className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors"
-          >
-            <Settings className="w-4 h-4 text-foreground" />
-          </Link>
+          <div className="flex items-center gap-2">
+            {user?.type === "admin" && (
+              <Link
+                to="/admin"
+                className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors"
+              >
+                <Settings className="w-4 h-4 text-foreground" />
+              </Link>
+            )}
+            <button
+              onClick={handleLogout}
+              className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-destructive/80 transition-colors"
+            >
+              <LogOut className="w-4 h-4 text-foreground" />
+            </button>
+          </div>
         </div>
       </div>
 
