@@ -13,6 +13,7 @@ interface CardEditorProps {
 
 const defaultCard: LoyaltyCard = {
   id: "",
+  restaurantId: "",
   brandName: "",
   brandIcon: "🏪",
   tagline: "",
