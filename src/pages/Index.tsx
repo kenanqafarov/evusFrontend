@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Settings } from "lucide-react";
+import { Settings, LogOut } from "lucide-react";
 import WalletCard from "@/components/WalletCard";
 import type { LoyaltyCard } from "@/types/card";
 import { sampleCards } from "@/data/sampleCards";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const [cards, setCards] = useState<LoyaltyCard[]>([]);
