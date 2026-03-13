@@ -36,6 +36,7 @@ const App = () => (
             <Route path="/login" element={<LoginRoute />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute adminOnly><Admin /></ProtectedRoute>} />
+            <Route path="/register/:restaurantId" element={<Register />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
