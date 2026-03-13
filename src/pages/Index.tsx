@@ -1,11 +1,59 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Settings } from "lucide-react";
+import WalletCard from "@/components/WalletCard";
+import type { LoyaltyCard } from "@/types/card";
+import { sampleCards } from "@/data/sampleCards";
 
 const Index = () => {
+  const [cards, setCards] = useState<LoyaltyCard[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("wallet-cards");
+    if (stored) {
+      setCards(JSON.parse(stored));
+    } else {
+      setCards(sampleCards);
+      localStorage.setItem("wallet-cards", JSON.stringify(sampleCards));
+    }
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="sticky top-0 z-10 glass-effect bg-background/80 border-b border-border">
+        <div className="max-w-lg mx-auto px-4 py-4 flex items-center justify-between">
+          <h1 className="text-lg font-semibold text-foreground">Wallet</h1>
+          <Link
+            to="/admin"
+            className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors"
+          >
+            <Settings className="w-4 h-4 text-foreground" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Cards Stack */}
+      <div className="max-w-lg mx-auto px-4 py-6 space-y-6 pb-20">
+        {cards.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <p className="text-muted-foreground text-lg">Heç bir kart yoxdur</p>
+            <Link to="/admin" className="text-primary text-sm mt-2 inline-block hover:underline">
+              Admin paneldən kart əlavə edin →
+            </Link>
+          </motion.div>
+        ) : (
+          cards.map((card, i) => (
+            <div key={card.id} className="flex justify-center">
+              <WalletCard card={card} index={i} />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
