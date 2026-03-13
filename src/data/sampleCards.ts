@@ -1,0 +1,43 @@
+import type { LoyaltyCard } from "@/types/card";
+
+export const sampleCards: LoyaltyCard[] = [
+  {
+    id: "1",
+    brandName: "Slice Society",
+    brandIcon: "🍕",
+    tagline: "Cheesy pizza slice",
+    heroImage: "",
+    description: "Buffalo chicken pizza",
+    dateLabel: "Saturday & Sunday only",
+    dateValue: "",
+    gradientFrom: "#d4e157",
+    gradientTo: "#c0ca33",
+    qrValue: "https://slicesociety.com/loyalty",
+  },
+  {
+    id: "2",
+    brandName: "Coffeeshop",
+    brandIcon: "☕",
+    tagline: "Your morning fix",
+    heroImage: "",
+    description: "Try our new pistachio latte",
+    dateLabel: "Available until:",
+    dateValue: "03/05/25",
+    gradientFrom: "#f8bbd0",
+    gradientTo: "#ce93d8",
+    qrValue: "https://coffeeshop.com/loyalty",
+  },
+  {
+    id: "3",
+    brandName: "Bali Escape",
+    brandIcon: "🌴",
+    tagline: "Paradise awaits",
+    heroImage: "",
+    description: "7 nights, All-Inclusive",
+    dateLabel: "Next Departure:",
+    dateValue: "05/10/25",
+    gradientFrom: "#7e57c2",
+    gradientTo: "#5c6bc0",
+    qrValue: "https://baliescape.com/loyalty",
+  },
+];
