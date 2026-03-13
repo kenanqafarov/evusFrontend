@@ -9,6 +9,13 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const [cards, setCards] = useState<LoyaltyCard[]>([]);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   useEffect(() => {
     const stored = localStorage.getItem("wallet-cards");
