@@ -24,53 +24,66 @@ const WalletCard = ({ card, index = 0 }: WalletCardProps) => {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.15, duration: 0.5, ease: "easeOut" }}
-      className="w-full max-w-[360px] rounded-2xl overflow-hidden wallet-card-shadow"
+      className="w-full max-w-[360px] rounded-3xl overflow-hidden wallet-card-shadow relative"
       style={{
         background: `linear-gradient(160deg, ${card.gradientFrom}, ${card.gradientTo})`,
       }}
     >
-      {/* Header */}
-      <div className="flex items-center gap-3 px-5 pt-5 pb-3">
-        <div className="w-10 h-10 rounded-xl bg-white/90 flex items-center justify-center text-xl shadow-sm">
+      {/* Header (Apple Wallet header style) */}
+      <div className="flex items-center gap-3 px-6 pt-6 pb-4">
+        <div className="w-11 h-11 rounded-2xl bg-white/90 flex items-center justify-center text-2xl shadow-inner">
           {card.brandIcon}
         </div>
-        <span className="font-semibold text-base text-black/80">{card.brandName}</span>
-        <span className="ml-auto text-sm text-black/50 font-medium">{card.tagline}</span>
+        <div className="flex-1">
+          <span className="font-semibold text-lg text-black/90 tracking-tight">
+            {card.brandName}
+          </span>
+        </div>
+        <span className="text-sm text-black/50 font-medium tracking-wide">
+          {card.tagline}
+        </span>
       </div>
 
-      {/* Hero Image */}
-      <div className="px-0">
+      {/* Hero Image (Apple Wallet strip/background style – tam ekran, object-cover) */}
+      <div className="relative px-0">
         <img
           src={heroSrc}
           alt={card.brandName}
-          className="w-full h-48 object-cover"
+          className="w-full h-[220px] object-cover"
         />
+        {/* Apple-style subtle dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20" />
       </div>
 
-      {/* Info Section */}
-      <div className="px-5 pt-4 pb-3 flex items-end justify-between">
-        <div>
-          <p className="text-lg font-semibold text-black/80 leading-tight max-w-[180px]">
+      {/* Info Section (Primary + Auxiliary fields – Apple Pass style) */}
+      <div className="px-6 pt-5 pb-4 flex items-end justify-between relative z-10">
+        <div className="max-w-[200px]">
+          <p className="text-xl font-semibold text-black/90 leading-tight tracking-tight">
             {card.description}
           </p>
         </div>
         <div className="text-right">
-          <p className="text-sm text-black/50 font-medium">{card.dateLabel}</p>
+          <p className="text-xs uppercase tracking-[1px] text-black/50 font-medium">
+            {card.dateLabel}
+          </p>
           {card.dateValue && (
-            <p className="text-lg font-semibold text-black/80">{card.dateValue}</p>
+            <p className="text-2xl font-semibold text-black/90 mt-1 tracking-tighter">
+              {card.dateValue}
+            </p>
           )}
         </div>
       </div>
 
-      {/* QR Code */}
-      <div className="flex justify-center py-5">
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
+      {/* QR Code Section – tam Apple Wallet barcode/QR stilində (white strip + centered + shadow) */}
+      <div className="bg-white/95 px-6 py-7 flex justify-center border-t border-white/80">
+        <div className="bg-white rounded-3xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.15)]">
           <QRCodeSVG
             value={card.qrValue}
-            size={120}
+            size={148}
             level="M"
             bgColor="white"
-            fgColor="black"
+            fgColor="#1C1C1E"
+            includeMargin={false}
           />
         </div>
       </div>

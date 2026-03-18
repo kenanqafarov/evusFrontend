@@ -13,15 +13,33 @@ import NotFound from "./pages/NotFound.tsx";
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (!user) return <Navigate to="/login" replace />;
-  if (adminOnly && user.type !== "admin") return <Navigate to="/" replace />;
+  if (adminOnly && user.role !== "admin") return <Navigate to="/" replace />;
   return <>{children}</>;
 };
 
 const LoginRoute = () => {
-  const { user } = useAuth();
-  if (user) return <Navigate to={user.type === "admin" ? "/admin" : "/"} replace />;
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (user) return <Navigate to={user.role === "admin" ? "/admin" : "/"} replace />;
   return <Login />;
 };
 
@@ -36,7 +54,7 @@ const App = () => (
             <Route path="/login" element={<LoginRoute />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute adminOnly><Admin /></ProtectedRoute>} />
-            <Route path="/register/:restaurantId" element={<Register />} />
+            <Route path="/register/:registerLink" element={<Register />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
